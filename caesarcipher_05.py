@@ -7,11 +7,18 @@
 #   The user chooses to encrypt or decrypt a message. Then the app asks for the
 #   message, key, and alphabet, and then performs the desired action.
 #
+#   ISSUES:
+#   1. There's no handling for incorrect choices of alphabet or cipher
+#   2. What if the user has multiple messages? Should we ask if they want
+#   to write/decode another message
+# 
 
-alphabet01 = 'GjlZCMaQKU"/-Xf$£mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k@hnIuVWsp'
-alphabet02 = 'hkS*F>ucL/l-)VPB£iRZUdICQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
-alphabet03 = '(OIce$TnM=JvF?j<&X+S>ih"EYdK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
+alphabet01 = 'GjlZCMaQKU"/-Xf$£\\mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k\'@hnIuVWsp'
+alphabet02 = 'hkS*F>ucL/l-)VPB£iR\\ZUdI\'CQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
+alphabet03 = '(OIce$TnM=JvF?j<&X+S>i\\h"EY\'dK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
 newMessage = ''
+userChoice = ''
+
 
 print('Would you like to encode or decode a message?')
 userChoice = int(input('Choose 1 to encode or 2 to decode: '))

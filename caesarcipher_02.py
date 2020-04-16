@@ -1,23 +1,22 @@
 #
-#   CAESAR CIPHER - PART 2
-#   Handling capitals and non-alphanumeric
+#    CAESAR CIPHER - PART 2
+#    Handling capitals and non-alphanumeric
 #
-#   Standard Caesar Cipher where the user adds a message and cipher key
-#   The message is encoded according to the key in relation to the alphabet
-#   Part 2 gets round the capitalised and non-alphanumeric characters
+#    This cipher varies from Part I in the alphabet variable now contains
+#    capital letters and non-alphanumeric characters
 #
-#   Known issues:
-#   - Won't encode the single apostrophe, ', as that is what is being used
-#   to define the aplphabet
-#   - Also, the 'alphabet' is a limiting factor as only characters which are in
-#   there will be encoded. EG. there aren't curly brackets {} so they won't get
-#   get encoded
+#    There are still two major issues with this version of the cipher, can
+#    you think what they are? 
+#
 #
 
 alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!"£$%^&*();:@#~?/>.<,-_=+'
 newMessage = ''
 
 message = input('Please enter a messsage: ')
+# The key is the number of steps along the alphabet the program will step 
+# when encrypting the message. A key of 3 for example would turn the letter
+# 'c' into 'f'
 theKey = int(input('Please enter your key: '))
 
 for character in message:
@@ -28,7 +27,7 @@ for character in message:
         newCharacter = alphabet[newPosition]
         newMessage += newCharacter
     else:
-        newMessage += character
+        newMessage += character # line to handle a character which isn't in the alphabet variable
 
 print('Your new message is: ', newMessage)
 

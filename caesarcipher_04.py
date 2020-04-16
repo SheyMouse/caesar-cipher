@@ -2,23 +2,23 @@
 #   CAESAR CIPHER - PART 4
 #   Making the cipher even more complex and harder to reverse engineer
 #
-#   In this Caesar Cipher we use multiple scrambled alphabets. The user choses
-#   an alphabet, then types the message, and picks the key.
+#   In this Caesar Cipher we use multiple scrambled alphabets. The user chooses
+#   an alphabet, then types the message, and finally picks the key.
 #   Adding extra complexity makes it even more difficult to reverse your
 #   message, but could be easily found out if both the key and the alphabet
 #   number are known.
-#
-#   Known issues:
-#   - Won't encode the single apostrophe, ', as that is what is being used
-#   to define the aplphabet
-#   - Also, the 'alphabet' is a limiting factor as only characters which are in
-#   there will be encoded. EG. there aren't curly brackets {} so they won't get
-#   get encoded
-#
+#    The single apostrophe is handled using the escape character \. So is
+#   the backslash. This needs to manually be entered after the alphabets 
+#   scrambled. 
+#   
+#   CHALLENGES - 
+#   1. What if the user doesn't choose 1-3
+#   2. What if the user doesn't choose a numeric key
+#   3. What if the user wanted to decode a message from a friend?
 
-alphabet01 = 'GjlZCMaQKU"/-Xf$£mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k@hnIuVWsp'
-alphabet02 = 'hkS*F>ucL/l-)VPB£iRZUdICQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
-alphabet03 = '(OIce$TnM=JvF?j<&X+S>ih"EYdK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
+alphabet01 = 'GjlZCMaQKU"/-Xf$£\\mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k\'@hnIuVWsp'
+alphabet02 = 'hkS*F>ucL/l-)VPB£iR\\ZUdI\'CQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
+alphabet03 = '(OIce$TnM=JvF?j<&X+S>i\\h"EY\'dK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
 newMessage = ''
 
 message = input('Please enter a messsage: ')
@@ -42,7 +42,7 @@ for character in message:
         newCharacter = useAlpha[newPosition]
         newMessage += newCharacter
     else:
-        newMessage += character
+        newMessage += character # line to handle a character which isn't in the alphabet variable
 
 print('Your new message is: ', newMessage)
 

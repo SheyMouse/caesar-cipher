@@ -4,23 +4,22 @@
 #
 #   In this Caesar Cipher the alphabet was scrambled using a small Python app
 #   This will guard against someone trying to reverse engineer your message by
-#   assuming you made the alphabet by using lower case a-z then upper case A-z
+#   assuming you made the alphabet by using lower case a-z then upper case A-Z
 #   followed by non-alphanumeric characters.
 #   The message is encoded according to the key in relation to the alphabet
 #   
-#
-#   Known issues:
-#   - Won't encode the single apostrophe, ', as that is what is being used
-#   to define the aplphabet
-#   - Also, the 'alphabet' is a limiting factor as only characters which are in
-#   there will be encoded. EG. there aren't curly brackets {} so they won't get
-#   get encoded
+#    CHALLENGES - 
+#       1. How would you handle characters which are missing such as ' and \
+#       2. Is there a way to handle spaces between words
 #
 
 alphabet = 'GjlZCMaQKU"/-Xf$£mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k@hnIuVWsp'
 newMessage = ''
 
 message = input('Please enter a messsage: ')
+# The key is the number of steps along the alphabet the program will step 
+# when encrypting the message. A key of 3 for example would turn the letter
+# 'c' into 'f'
 theKey = int(input('Please enter your key: '))
 
 for character in message:
@@ -31,7 +30,7 @@ for character in message:
         newCharacter = alphabet[newPosition]
         newMessage += newCharacter
     else:
-        newMessage += character
+        newMessage += character # line to handle a character which isn't in the alphabet variable
 
 print('Your new message is: ', newMessage)
 
