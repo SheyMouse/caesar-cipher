@@ -8,21 +8,55 @@
 # ToDo: 
 # 1. Add JeffGames icon
 
+
+# Import tkinter, our GUI framework
 from tkinter import * # Import tkinter, our GUI framework
 
 root = Tk()
 
+# Variables used by the main program.
+alphabet01 = 'GjlZCMaQKU"/-Xf$£\\mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;evN+R#k\'@hnIuVWsp'
+alphabet02 = 'hkS*F>ucL/l-)VPB£iR\\ZUdI\'CQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
+alphabet03 = '(OIce$TnM=JvF?j<&X+S>i\\h"EY\'dK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
+
+userChoice = ''
+
 # Define what happens when the go button is clicked
 
 def clickAlpha():
-    print("Alphabet = ", algo.get()) # Calls algo and prints it's value
+    print("Alphabet = ", algo.get()) # Calls algo and prints its value
 
 def clickCrypt():
-    print("Crypto = ", crypt.get()) # Calls crypt and prints it's value
+    print("Crypto = ", crypt.get()) # Calls crypt and prints its value
+
+def moveCaesar(sld): # A variable must be in here for the function to work
+    print("Shift = ", cesar.get()) # Calls cesar variable and prints its value
     
 def clickGo():
-    msgOutput.insert(0, msgInput)
+    global newMessage
+    #msgOutput.insert(0, newMessage)
     print("Clicked go button") # Log button click 
+    print(msgInput.get())
+    
+    if algo == 1:
+        useAlpha = alphabet01
+        print(alphabet01)
+    elif algo == 2:
+        useAlpha = alphabet02
+    else:
+        useAlpha = alphabet03
+
+    for character in str(msgInput):
+        if character in useAlpha:
+            position = useAlpha.find(character)
+            # NB: len(alphabet) handles a list of any length
+            newPosition = (position + cesar.get())%len(useAlpha) 
+            newCharacter = useAlpha[newPosition]
+            newMessage += newCharacter
+            print(newMessage.get())
+        else:
+            newMessage += character
+            #print(str(newMessage))
 
 def clickClear():
     msgInput.delete(0, END)
@@ -45,13 +79,20 @@ ALPHAS = [
 # Set up for the Alphabet being used. Alphabet 1 is default
 algo = StringVar()
 algo.set("Alpha1") # Sets Alphabet 1 as default
-print("Alphabet choice: ", algo.get()) # Calls algo.set and prints it's value
+print("Initial alphabet: ", algo.get()) # Calls algo.set and prints its value
 
-# Set up for the Alphabet being used. Alphabet 1 is default
+# Set up for the encrypt being used. Encrypt is default
 crypt = StringVar()
 crypt.set("Crypt1") # Sets Encrypt as default
-print("Crypto choice: ", crypt.get()) # Calls crypt and prints it's value
+print("Crypto choice: ", crypt.get()) # Calls crypt and prints its value
 
+# Set up for the Casar shift. 0 is the default
+cesar = IntVar()
+cesar.set(0)
+print("Initial shift: ", cesar.get()) # Calls cesar variable and prints its value
+
+newMessage = StringVar()
+newMessage.set("")
 
 # SET UP THE CANVAS
 root.title("Caeser Cipher by JeffGames")
@@ -79,8 +120,13 @@ btnAlpha1 = Radiobutton(alphaFrame, text="Alphabet 1", variable=algo, value="Alp
 btnAlpha2 = Radiobutton(alphaFrame, text="Alphabet 2", variable=algo, value="Alpha2",command=clickAlpha) 
 btnAlpha3 = Radiobutton(alphaFrame, text="Alphabet 3", variable=algo, value="Alpha3",command=clickAlpha) 
 
+# Caesar shift slider
+caesarFrame = LabelFrame(root, padx=10, pady=10, bg='red')
+lblCaesar = Label(caesarFrame, text=" STEP 3 - Now set your Caesar Shift")
+sldrCaesar = Scale(caesarFrame, from_=0, to=80, variable=cesar, orient=HORIZONTAL, command=moveCaesar)
+
 # Input message box with a heading instructing user to paste or type message
-lblMsgIn = Label(root, text="STEP 3 - Type or paste your message here then press the GO! button below.")
+lblMsgIn = Label(root, text="STEP 4 - Type or paste your message here then press the GO! button below.")
 msgInput = Entry(root)
 
 # Button to engage the encryption algo
@@ -117,21 +163,26 @@ btnAlpha1.grid(row=4, column=0)
 btnAlpha2.grid(row=4, column=1)
 btnAlpha3.grid(row=4, column=2)
 
+# Caesar
+caesarFrame.grid(row=5, columnspan=3, sticky=W+E)
+lblCaesar.grid(row=5, column=0, columnspan=3, sticky=W)
+sldrCaesar.grid(row=6, column=0, columnspan=3, sticky=W+E)
+
 # ROW 5 & 6 - User's Message input heading and area
-lblMsgIn.grid(row=5, column=0, columnspan=3)
-msgInput.grid(row=6, column=0, columnspan=3, sticky=W+E)
+lblMsgIn.grid(row=7, column=0, columnspan=3)
+msgInput.grid(row=8, column=0, columnspan=3, sticky=W+E)
 
 # ROW 7 - Go button placement
-btnGo.grid(row= 7, column=1)
+btnGo.grid(row= 9, column=1)
 
 # ROW 8 & 9 - User's Message input heading and area
 
-msgOutput.grid(row =8, column=0, columnspan=3, sticky=W+E)
+msgOutput.grid(row=10, column=0, columnspan=3, sticky=W+E)
 
 # ROW 10 - Clear Messages & Copy to clipboard, Exit program button placement
-btnClear.grid(row=9, column=0)
-btnCopy.grid(row=9, column=1)
-btnExit.grid(row=9, column=2)
+btnClear.grid(row=11, column=0)
+btnCopy.grid(row=11, column=1)
+btnExit.grid(row=11, column=2)
 
 # tkinter mainloop
 root.mainloop()
