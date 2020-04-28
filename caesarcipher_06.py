@@ -19,7 +19,7 @@ alphabet01 = 'GjlZCMaQKU"/-Xf$£\\mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;ev
 alphabet02 = 'hkS*F>ucL/l-)VPB£iR\\ZUdI\'CQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
 alphabet03 = '(OIce$TnM=JvF?j<&X+S>i\\h"EY\'dK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
 
-userChoice = ''
+
 
 # Define what happens when the go button is clicked
 
@@ -33,19 +33,20 @@ def moveCaesar(sld): # A variable must be in here for the function to work
     print("Shift = ", cesar.get()) # Calls cesar variable and prints its value
     
 def clickGo():
-    global newMessage
-    #msgOutput.insert(0, newMessage)
+    global newMessage # Not sure if this is needed. Will check once app is working
+    global newCharacter # Not sure if this is needed. Will check once app is working
     print("Clicked go button") # Log button click 
-    print(msgInput.get())
+    print("Caesar shift set to ", cesar.get())
+
     
     if algo == 1:
         useAlpha = alphabet01
-        print(alphabet01)
+        print(alphabet01.get())
     elif algo == 2:
         useAlpha = alphabet02
     else:
         useAlpha = alphabet03
-
+        
     for character in str(msgInput):
         if character in useAlpha:
             position = useAlpha.find(character)
@@ -53,9 +54,22 @@ def clickGo():
             newPosition = (position + cesar.get())%len(useAlpha) 
             newCharacter = useAlpha[newPosition]
             newMessage += newCharacter
-            print(newMessage.get())
-        else:
-            newMessage += character
+            #Put the new message into the message output field        
+            msgOutput.delete(0, END) # Clear the output field after GO is clicked
+            Ans = str(msgInput.get()) # Read message for putting into the output field
+            msgOutput.insert(0, Ans) # Put the message from input field into 
+        
+
+    #for character in str(msgInput):
+        #if character in useAlpha:
+            #position = useAlpha.find(character)
+            ## NB: len(alphabet) handles a list of any length
+            #newPosition = (position + cesar.get())%len(useAlpha) 
+            #newCharacter = useAlpha[newPosition]
+            #newMessage += newCharacter
+            #print(newMessage.get())
+        #else:
+            #newMessage += character
             #print(str(newMessage))
 
 def clickClear():
@@ -88,14 +102,14 @@ print("Crypto choice: ", crypt.get()) # Calls crypt and prints its value
 
 # Set up for the Casar shift. 0 is the default
 cesar = IntVar()
-cesar.set(0)
+cesar.set(1)
 print("Initial shift: ", cesar.get()) # Calls cesar variable and prints its value
 
 newMessage = StringVar()
 newMessage.set("")
 
 # SET UP THE CANVAS
-root.title("Caeser Cipher by JeffGames")
+root.title("Caesar Cipher by JeffGames")
 
 
 #   ---------------------------------------------------
