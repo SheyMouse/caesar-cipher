@@ -34,9 +34,7 @@ def clickAlpha():
     elif algo == Alpha2:
         print(alphabet02)
     else:
-        #print(alphabet03)
-
-
+        print(alphabet03)
 
 def clickDecrypt():
     print("Decrypt pressed")
