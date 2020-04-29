@@ -20,56 +20,22 @@ alphabet01 = 'GjlZCMaQKU"/-Xf$£\\mrw:>H(%Fo&tD<!gJLzbiSxBcT,dqPYy=*OA~_?^.)E;ev
 alphabet02 = 'hkS*F>ucL/l-)VPB£iR\\ZUdI\'CQ$z(@?=f<ta:m#Wvp;~n!Yg."^sxMHNKDwybjr_,O%oq+TJGXAEe&'
 alphabet03 = '(OIce$TnM=JvF?j<&X+S>i\\h"EY\'dK£,lq!Z@~QmbyD-wUWNsrV^H:fB.aPpkL_otC/);RzAGxg%*#u'
 
-
 # Define what happens when the go button is clicked
-
+fooAlpha = alphabet01
 def clickAlpha():
+    global fooAlpha
     print("Alphabet from clickAlpha = ", algo.get()) # Calls algo and prints its value
-    # Doesn't work at the moment
-    #Needs to set useAlpha to Alphabet01-03
-    #myAlpha = algo.get()
-    #print("myAlpha = ", myAlpha)
-    if algo == Alpha1:
-        print(alphabet01)
-    elif algo == Alpha2:
-        print(alphabet02)
+    myAlpha = algo.get()
+    print("myAlpha = ", myAlpha) # debug printing
+    if myAlpha == "Alpha1":
+        print(alphabet01) # debug printing
+        fooAlpha = alphabet01
+    elif myAlpha == "Alpha2":
+        print(alphabet02) # debug printing
+        fooAlpha = alphabet02
     else:
-        print(alphabet03)
-
-def clickDecrypt():
-    print("Decrypt pressed")
-    msgEncrypt = msgInput.get()
-    msgEncrypt = str(msgEncrypt)
-    #print(msgEncrypt) # Used for debugging
-    caesarShift = cesar.get()
-    caesarShift = int(caesarShift)
-    useAlpha = algo.get()# Hard coding the algo
-    #print(useAlpha) # Used for debugging
-    newMessage = ""
-    
-
-    #if algo == 1:
-        #useAlpha = alphabet01
-        #print(alphabet01.get())
-    #elif algo == 2:
-        #useAlpha = alphabet02
-    #else:
-        #useAlpha = alphabet03
-        
-    for character in msgEncrypt:
-        if character in useAlpha:
-            position = useAlpha.find(character) 
-            # NB: len(alphabet) handles a list of any length
-            newPosition = (position - caesarShift)%len(useAlpha) 
-            newCharacter = useAlpha[newPosition]
-            newMessage += newCharacter
-            #Put the new message into the message output field        
-            msgOutput.delete(0, END) # Clear the output field after GO is clicked
-            Ans = str(newMessage) # Read message for putting into the output field
-            msgOutput.insert(0, Ans) # Put the message from input field into
-
-def moveCaesar(sld): # A variable must be in here for the function to work
-    print("Shift = ", cesar.get()) # Calls cesar variable and prints its value
+        print(alphabet03) # debug printing
+        fooAlpha = alphabet03
 
 
 def clickEncrypt():
@@ -78,8 +44,8 @@ def clickEncrypt():
     #print(msgEncrypt) # Used for debugging
     caesarShift = cesar.get()
     caesarShift = int(caesarShift)
-    useAlpha = algo.get() # Hard coding the algo
-    #useAlpha = str(useAlpha)
+    useAlpha = fooAlpha
+    useAlpha = str(useAlpha)
     print(useAlpha) # Used for debugging
     newMessage = ""
 
@@ -91,9 +57,40 @@ def clickEncrypt():
             newCharacter = useAlpha[newPosition]
             newMessage += newCharacter
             #Put the new message into the message output field        
-            msgOutput.delete(0, END) # Clear the output field after GO is clicked
-            # Ans = str(newMessage) # Read message for putting into the output field
-            msgOutput.insert(0, newMessage) #(0, Ans) # Put the message from input field into
+
+        else:
+            newMessage += character # line to handle a character which isn't in the alphabet variable
+        msgOutput.delete(0, END) # Clear the output field after GO is clicked
+        # Ans = str(newMessage) # Read message for putting into the output field
+        msgOutput.insert(0, newMessage) #(0, Ans) # Put the message from input field into
+
+def clickDecrypt():
+    print("Decrypt pressed")
+    msgEncrypt = msgInput.get()
+    msgEncrypt = str(msgEncrypt)
+    #print(msgEncrypt) # Used for debugging
+    caesarShift = cesar.get()
+    caesarShift = int(caesarShift)
+    useAlpha = fooAlpha # Hard coding the algo
+    useAlpha = str(useAlpha)
+    print(useAlpha) # Used for debugging
+    newMessage = ""
+
+    for character in msgEncrypt:
+        if character in useAlpha:
+            position = useAlpha.find(character) 
+            # NB: len(alphabet) handles a list of any length
+            newPosition = (position - caesarShift)%len(useAlpha) 
+            newCharacter = useAlpha[newPosition]
+            newMessage += newCharacter
+        else:
+            newMessage += character # line to handle a character which isn't in the alphabet variable
+        msgOutput.delete(0, END) # Clear the output field after GO is clicked
+        # Ans = str(newMessage) # Read message for putting into the output field
+        msgOutput.insert(0, newMessage) #(0, Ans) # Put the message from input field into
+
+def moveCaesar(sld): # A variable must be in here for the function to work
+    print("Shift = ", cesar.get()) # Calls cesar variable and prints its value
 
 def clickClear():
     msgInput.delete(0, END)
@@ -101,17 +98,10 @@ def clickClear():
     print("Cleared all messages")
 
 def clickCopy():
-    return
+    return # Will eventually copy the decrypted or encrypted text to clipboard
     
 def clickQuit(): # Created to have a pop-up to confirm quit.
-    btnExit(command=root.quit) # This doesn't work. Need to figure out why
-
-# List for radio buttons.
-#ALPHAS = [
-    #("Alphabet 1", "Alpha1"),
-    #("Alphabet 2", "Alpha3"),
-    #("Alphabet 3", "Alpha3"),
-#]
+    btnExit(command=root.quit)
 
 # Set up for the Alphabet being used. Alphabet 1 is default
 algo = StringVar()
@@ -122,6 +112,7 @@ print("Initial alphabet: ", algo.get()) # Calls algo.set and prints its value
 cesar = IntVar()
 cesar.set(1)
 print("Initial shift: ", cesar.get()) # Calls cesar variable and prints its value
+
 
 
 # SET UP THE CANVAS
@@ -157,11 +148,6 @@ cryptFrame = LabelFrame(root, padx=10, pady=10, bg='pink')
 lblCryptMsg = Label(cryptFrame, text="STEP 1 - Press a button to Encrypt or Decrypt a message", padx=5, pady=5)
 btnCrypt1 = Button(cryptFrame, text="Encrypt", command=clickEncrypt)
 btnCrypt2 = Button(cryptFrame, text="Decrypt", command=clickDecrypt) 
-
-# Button to engage the encryption algo
-# NB: Maybe make it say Encrypt or Decrypt based on the user choice above
-
-#btnGo =  Button(root, text="GO!", command=clickGo)
 
 #Output box
 msgOutput = Entry(root)
@@ -208,9 +194,6 @@ msgOutput.grid(row=9, column=0, columnspan=3, sticky=W+E)
 btnClear.grid(row=10, column=0)
 btnCopy.grid(row=10, column=1)
 btnExit.grid(row=10, column=2)
-
-# ROW 9 - Go button placement
-#btnGo.grid(row= 11, column=1)
 
 # tkinter mainloop
 root.mainloop()
