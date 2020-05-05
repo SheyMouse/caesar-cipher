@@ -128,24 +128,27 @@ welcFrame = LabelFrame(root, padx=10, pady=10, bg='blue')
 lblWelcome = Label(welcFrame, text="Welcome to the Caesar Cipher program", bg='blue', fg='white') 
 
 # Input message box with a heading instructing user to paste or type message
-lblMsgIn = Label(root, text="STEP 1 - Type or paste your message in the box below.")
+lblMsgIn = Label(root, text="Type or paste your message in the box below.")
 msgInput = Entry(root)
 
+# Parent frame for Alphabet and Caesar shift
+choicesFrame = LabelFrame(root, padx= 5, pady=5)
+
 # Alphabet choices
-alphaFrame = LabelFrame(root, padx=10, pady=10, bg='green')
-lblAlphaChoice = Label(alphaFrame, text=" STEP 2 - Now choose your encryption algo")
+alphaFrame = LabelFrame(choicesFrame, padx=2, pady=2)
+lblAlphaChoice = Label(alphaFrame, text="Choose your encryption algo")
 btnAlpha1 = Radiobutton(alphaFrame, text="Alphabet 1", variable=algo, value="Alpha1", command=clickAlpha) 
 btnAlpha2 = Radiobutton(alphaFrame, text="Alphabet 2", variable=algo, value="Alpha2",command=clickAlpha) 
 btnAlpha3 = Radiobutton(alphaFrame, text="Alphabet 3", variable=algo, value="Alpha3",command=clickAlpha) 
 
 # Caesar shift slider
-caesarFrame = LabelFrame(root, padx=10, pady=10, bg='red')
-lblCaesar = Label(caesarFrame, text=" STEP 3 - Now set your Caesar Shift")
-sldrCaesar = Scale(caesarFrame, from_=0, to=80, variable=cesar, orient=HORIZONTAL, command=moveCaesar)
+caesarFrame = LabelFrame(choicesFrame, padx=2, pady=2)
+lblCaesar = Label(caesarFrame, text="Set your Caesar Shift")
+sldrCaesar = Scale(caesarFrame, from_=0, to=80, variable=cesar, orient=VERTICAL, command=moveCaesar)
 
 # Encrypt / Decrypt user choices
-cryptFrame = LabelFrame(root, padx=10, pady=10, bg='pink')
-lblCryptMsg = Label(cryptFrame, text="STEP 1 - Press a button to Encrypt or Decrypt a message", padx=5, pady=5)
+cryptFrame = LabelFrame(root, padx=10, pady=10)
+lblCryptMsg = Label(cryptFrame, text="Press a button to Encrypt or Decrypt a message", padx=5, pady=5)
 btnCrypt1 = Button(cryptFrame, text="Encrypt", command=clickEncrypt)
 btnCrypt2 = Button(cryptFrame, text="Decrypt", command=clickDecrypt) 
 
@@ -169,15 +172,17 @@ lblWelcome.grid(row=0, column=0, columnspan=3)
 lblMsgIn.grid(row=1, column=0, columnspan=3)
 msgInput.grid(row=2, column=0, columnspan=3, sticky=W+E)
 
+choicesFrame.grid(row=3, columnspan=3, sticky=W+E)
 # ROW 3 & 4 - Choose Alphabet button and message placement
-alphaFrame.grid(row=3, columnspan=3, sticky=W+E)
-lblAlphaChoice.grid(row=3, column=0, columnspan=3, sticky=W)
-btnAlpha1.grid(row=4, column=0)
-btnAlpha2.grid(row=4, column=1)
-btnAlpha3.grid(row=4, column=2)
+alphaFrame.grid(row=0, column=0, sticky=W+E) #span=3
+lblAlphaChoice.grid(row=0, column=0, columnspan=3, sticky=W)
+btnAlpha1.grid(row=1, column=0)
+btnAlpha2.grid(row=2, column=0)
+btnAlpha3.grid(row=3, column=0)
 
 # ROW 5 & 6 Caesar shift slider
-caesarFrame.grid(row=5, columnspan=3, sticky=W+E)
+#caesarFrame.grid(row=5, columnspan=3, sticky=W+E)
+caesarFrame.grid(row=0, column=1, sticky=W+E)
 lblCaesar.grid(row=5, column=0, columnspan=3, sticky=W)
 sldrCaesar.grid(row=6, column=0, columnspan=3, sticky=W+E)
 
