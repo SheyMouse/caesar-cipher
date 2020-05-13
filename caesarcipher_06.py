@@ -98,7 +98,11 @@ def clickClear():
     print("Cleared all messages")
 
 def clickCopy():
-    return # Will eventually copy the decrypted or encrypted text to clipboard
+    # return # Will eventually copy the decrypted or encrypted text to clipboard
+    root.clipboard_clear() #clear the computer's clopboard
+    # root.clipboard_append(msgOutput) #populate the clipboard
+    print('clipboard module accessed')
+    
     
 def clickQuit(): # Created to have a pop-up to confirm quit.
     btnExit(command=root.quit)
